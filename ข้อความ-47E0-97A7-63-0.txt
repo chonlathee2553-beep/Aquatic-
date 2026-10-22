@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaPremium - ร้านค้าแอปพรีเมียมใต้มหาสมุทร</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Prompt & Kanit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ocean: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#06b6d4', // Cyan main
+                            600: '#0284c7', // Deep blue accent
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            deep: '#03192e',
+                            abyss: '#010c17'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                        heading: ['Kanit', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 180, 216, 0.25)',
+                        'glass-hover': '0 12px 40px 0 rgba(6, 182, 212, 0.4)',
+                        'glow': '0 0 20px rgba(56, 189, 248, 0.6)',
+                        'glow-lg': '0 0 35px rgba(6, 182, 212, 0.8)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(180deg, #021526 0%, #03254c 40%, #011222 100%);
+            min-height: 100vh;
+            color: #e0f2fe;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(8, 47, 73, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 20, 40, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(12, 74, 110, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(125, 211, 252, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(14, 116, 144, 0.5);
+            border-color: rgba(56, 189, 248, 0.5);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.3);
+        }
+
+        .glass-input {
+            background: rgba(3, 25, 46, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #e0f2fe;
+            backdrop-filter: blur(8px);
+        }
+
+        .glass-input:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Bubble Animation */
+        .bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(56, 189, 248, 0.2));
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: rise 12s infinite ease-in;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: -50px;
+                transform: translateX(0) scale(0.8);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.6;
+            }
+            80% {
+                opacity: 0.6;
+            }
+            100% {
+                bottom: 108%;
+                transform: translateX(100px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Shimmer text */
+        .shimmer-text {
+            background: linear-gradient(90deg, #38bdf8, #a5f3fc, #06b6d4, #38bdf8);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(2, 21, 38, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(56, 189, 248, 0.6);
+        }
+    </style>
+</head>
+<body class="relative flex flex-col min-h-screen pb-12">
+
+    <!-- Background Animated Bubbles -->
+    <div class="bubbles" id="bubblesContainer"></div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-4 z-40 px-4 sm:px-8 max-w-7xl mx-auto w-full">
+        <nav class="glass-panel rounded-full px-4 py-3 sm:px-6 flex items-center justify-between shadow-glass">
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-glow text-white text-xl">
+                    🌊
+                </div>
+                <div>
+                    <span class="font-heading font-bold text-xl sm:text-2xl shimmer-text tracking-wide">AQUA</span>
+                    <span class="text-xs sm:text-sm font-light text-cyan-200 block -mt-1">PREMIUM APP</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center space-x-2 bg-slate-900/40 p-1.5 rounded-full border border-cyan-500/20">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-5 py-2 rounded-full text-sm font-medium transition-all text-cyan-300 bg-cyan-500/20 border border-cyan-400/30 shadow-sm">
+                    <i class="fa-solid fa-house mr-1.5"></i> หน้าแรก
+                </button>
+                <button onclick="switchTab('catalog')" id="nav-catalog" class="nav-btn px-5 py-2 rounded-full text-sm font-medium transition-all hover:text-cyan-300 text-slate-300">
+                    <i class="fa-solid fa-store mr-1.5"></i> สินค้าทั้งหมด
+                </button>
+                <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn px-5 py-2 rounded-full text-sm font-medium transition-all hover:text-cyan-300 text-slate-300">
+                    <i class="fa-solid fa-receipt mr-1.5"></i> ตรวจสอบสต็อก/คำสั่งซื้อ
+                </button>
+            </div>
+
+            <!-- Role Selector & Admin Toggle -->
+            <div class="flex items-center space-x-3">
+                <!-- Role Switcher Dropdown (for testing roles) -->
+                <div class="relative group">
+                    <button class="glass-panel text-xs sm:text-sm px-3.5 py-2 rounded-full flex items-center space-x-2 border-cyan-400/40 hover:bg-cyan-500/20 transition">
+                        <span id="currentRoleBadge" class="flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 mr-2 animate-pulse"></span>
+                            <span id="roleText">ลูกค้าทั่วไป</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-xs text-cyan-300"></i>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 mt-2 w-48 glass-panel rounded-2xl py-2 hidden group-hover:block z-50 border border-cyan-500/30 shadow-xl">
+                        <div class="px-3 py-1 text-[11px] text-cyan-300 font-semibold uppercase tracking-wider">สลับยศทดสอบระบบ</div>
+                        <button onclick="setRole('customer')" class="w-full text-left px-4 py-2 text-sm hover:bg-cyan-500/20 flex items-center justify-between text-slate-200">
+                            <span>ผู้ซื้อทั่วไป</span>
+                            <span class="text-xs text-slate-400">ราคาปกติ</span>
+                        </button>
+                        <button onclick="setRole('reseller')" class="w-full text-left px-4 py-2 text-sm hover:bg-cyan-500/20 flex items-center justify-between text-cyan-300">
+                            <span>ตัวแทนจำหน่าย</span>
+                            <span class="text-xs text-cyan-400">🌊 ราคาส่ง</span>
+                        </button>
+                        <div class="border-t border-cyan-500/20 my-1"></div>
+                        <button onclick="openAdminModal()" class="w-full text-left px-4 py-2 text-sm hover:bg-cyan-500/20 flex items-center space-x-2 text-amber-300">
+                            <i class="fa-solid fa-lock text-xs"></i>
+                            <span>เข้าสู่ระบบแอดมิน</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Admin Link -->
+                <button onclick="checkAdminAccess()" class="p-2.5 rounded-full glass-panel hover:bg-cyan-500/30 text-cyan-300 transition shadow-glow border border-cyan-400/40" title="หลังบ้าน Admin">
+                    <i class="fa-solid fa-user-shield text-lg"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Bottom Nav -->
+        <div class="md:hidden fixed bottom-4 left-4 right-4 z-50 glass-panel rounded-full p-2 flex justify-around items-center border border-cyan-500/40">
+            <button onclick="switchTab('home')" id="mobile-nav-home" class="p-2 text-cyan-300 rounded-full flex flex-col items-center text-xs">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span>หน้าแรก</span>
+            </button>
+            <button onclick="switchTab('catalog')" id="mobile-nav-catalog" class="p-2 text-slate-400 rounded-full flex flex-col items-center text-xs">
+                <i class="fa-solid fa-store text-lg"></i>
+                <span>สินค้า</span>
+            </button>
+            <button onclick="switchTab('orders')" id="mobile-nav-orders" class="p-2 text-slate-400 rounded-full flex flex-col items-center text-xs">
+                <i class="fa-solid fa-receipt text-lg"></i>
+                <span>คำสั่งซื้อ</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-8 mt-8 flex-grow z-10 relative">
+
+        <!-- Banner Announcement -->
+        <div class="glass-panel rounded-2xl p-4 mb-8 flex items-center justify-between border-l-4 border-l-cyan-400">
+            <div class="flex items-center space-x-3">
+                <div class="text-2xl text-cyan-300">🌊</div>
+                <div class="text-xs sm:text-sm">
+                    <span class="font-semibold text-cyan-200">ระบบออโต้ยืนยันสลิป 24 ชม.:</span> ซื้อแอปพรีเมียมง่ายๆ ด้วยราคาสุดพิเศษ สต็อกแน่น รับประกันตลอดการใช้งาน
+                </div>
+            </div>
+            <div class="hidden sm:block text-xs bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full border border-cyan-400/30">
+                สถานะระบบ: ปกติ 🌊
+            </div>
+        </div>
+
+        <!-- TAB 1: HOME PAGE -->
+        <section id="tab-home" class="tab-content space-y-12">
+            <!-- Hero Section -->
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 relative overflow-hidden shadow-glow border border-cyan-400/30">
+                <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="max-w-2xl relative z-10">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold mb-4 border border-cyan-400/30">
+                        <span>🌊 เว็บขายแอปอันดับ #1</span>
+                        <span>•</span>
+                        <span>จัดส่งไวใน 1 นาที</span>
+                    </div>
+                    <h1 class="font-heading text-3xl sm:text-5xl font-extrabold leading-tight mb-4">
+                        เติมความสุขระดับพรีเมียม <br>
+                        <span class="shimmer-text">ในราคาเบาสบายใต้มหาสมุทร 🌊</span>
+                    </h1>
+                    <p class="text-slate-300 text-sm sm:text-base mb-8 leading-relaxed">
+                        รวมความบันเทิงและเครื่องมือสร้างสรรค์ชั้นนำ Netflix, YouTube Premium, Spotify, Canva Pro และอื่นๆ อีกมากมาย ปลอดภัย 100% พร้อมบริการดูแลหลังการขายโดยทีมงานมืออาชีพ
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="switchTab('catalog')" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-sm shadow-glow transition transform hover:-translate-y-0.5 flex items-center space-x-2">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            <span>เลือกซื้อสินค้าเลย</span>
+                        </button>
+                        <button onclick="openSlipGuideModal()" class="px-6 py-3.5 rounded-full glass-panel hover:bg-cyan-500/20 text-cyan-200 font-semibold text-sm transition flex items-center space-x-2 border border-cyan-400/30">
+                            <i class="fa-solid fa-circle-info text-cyan-400"></i>
+                            <span>ระบบเช็คสลิปฟรี 🌊</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Quick Grid -->
+            <div>
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <h2 class="font-heading text-2xl font-bold text-white flex items-center gap-2">
+                            <span>หมวดหมู่ยอดฮิต</span>
+                            <span class="text-cyan-400 text-lg">🌊</span>
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-400">ค้นหาแอปตามประเภทการใช้งาน</p>
+                    </div>
+                    <button onclick="switchTab('catalog')" class="text-xs sm:text-sm text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                        ดูทั้งหมด <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div onclick="filterCategoryAndSwitch('entertainment')" class="glass-card rounded-2xl p-5 cursor-pointer text-center group">
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 mx-auto flex items-center justify-center text-cyan-300 text-2xl mb-3 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-film"></i>
+                        </div>
+                        <div class="font-semibold text-sm text-white">ความบันเทิง & หนัง</div>
+                        <div class="text-xs text-slate-400 mt-1">Netflix, Disney+, HBO</div>
+                    </div>
+                    <div onclick="filterCategoryAndSwitch('music')" class="glass-card rounded-2xl p-5 cursor-pointer text-center group">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-500/20 mx-auto flex items-center justify-center text-blue-300 text-2xl mb-3 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+                        <div class="font-semibold text-sm text-white">ฟังเพลงเพลินๆ</div>
+                        <div class="text-xs text-slate-400 mt-1">Spotify, YouTube Premium</div>
+                    </div>
+                    <div onclick="filterCategoryAndSwitch('work')" class="glass-card rounded-2xl p-5 cursor-pointer text-center group">
+                        <div class="w-12 h-12 rounded-2xl bg-teal-500/20 mx-auto flex items-center justify-center text-teal-300 text-2xl mb-3 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-pen-ruler"></i>
+                        </div>
+                        <div class="font-semibold text-sm text-white">กราฟิก & ตัดต่อ</div>
+                        <div class="text-xs text-slate-400 mt-1">Canva Pro, CapCut</div>
+                    </div>
+                    <div onclick="filterCategoryAndSwitch('tools')" class="glass-card rounded-2xl p-5 cursor-pointer text-center group">
+                        <div class="w-12 h-12 rounded-2xl bg-sky-500/20 mx-auto flex items-center justify-center text-sky-300 text-2xl mb-3 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="font-semibold text-sm text-white">เครื่องมือ & AI</div>
+                        <div class="text-xs text-slate-400 mt-1">ChatGPT Plus, Claude</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Apps Showcase -->
+            <div>
+                <h2 class="font-heading text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                    <span>สินค้าแนะนำประจำสัปดาห์</span>
+                    <span class="text-xs bg-cyan-500/30 text-cyan-300 px-2.5 py-1 rounded-full border border-cyan-400/30">ยอดนิยม 🌊</span>
+                </h2>
+                <div id="featuredProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamic rendering by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: PRODUCT CATALOG -->
+        <section id="tab-catalog" class="tab-content hidden space-y-8">
+            <!-- Search & Filter Header -->
+            <div class="glass-panel rounded-3xl p-6 flex flex-col md:flex-row gap-4 items-center justify-between">
+                <!-- Search Box -->
+                <div class="relative w-full md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-cyan-400"></i>
+                    <input type="text" id="searchInput" oninput="renderProducts()" placeholder="ค้นหาแอปพรีเมียม..." class="w-full glass-input rounded-full pl-11 pr-4 py-2.5 text-sm">
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex items-center space-x-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+                    <button onclick="filterCategory('all')" id="cat-all" class="cat-btn px-4 py-2 rounded-full text-xs font-medium bg-cyan-500/30 text-cyan-200 border border-cyan-400/40 whitespace-nowrap">
+                        ทั้งหมด
+                    </button>
+                    <button onclick="filterCategory('entertainment')" id="cat-entertainment" class="cat-btn px-4 py-2 rounded-full text-xs font-medium bg-slate-800/50 text-slate-300 border border-cyan-500/20 whitespace-nowrap hover:text-cyan-300">
+                        🎬 หนัง & ซีรีส์
+                    </button>
+                    <button onclick="filterCategory('music')" id="cat-music" class="cat-btn px-4 py-2 rounded-full text-xs font-medium bg-slate-800/50 text-slate-300 border border-cyan-500/20 whitespace-nowrap hover:text-cyan-300">
+                        🎵 ฟังเพลง
+                    </button>
+                    <button onclick="filterCategory('work')" id="cat-work" class="cat-btn px-4 py-2 rounded-full text-xs font-medium bg-slate-800/50 text-slate-300 border border-cyan-500/20 whitespace-nowrap hover:text-cyan-300">
+                        🎨 ทำงาน & ออกแบบ
+                    </button>
+                    <button onclick="filterCategory('tools')" id="cat-tools" class="cat-btn px-4 py-2 rounded-full text-xs font-medium bg-slate-800/50 text-slate-300 border border-cyan-500/20 whitespace-nowrap hover:text-cyan-300">
+                        🤖 AI & เครื่องมือ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- JS dynamic generation -->
+            </div>
+        </section>
+
+        <!-- TAB 3: ORDERS & STOCK CHECK -->
+        <section id="tab-orders" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-3xl p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                    <div>
+                        <h2 class="font-heading text-2xl font-bold text-white flex items-center gap-2">
+                            <span>ประวัติสั่งซื้อและสต็อกของคุณ</span>
+                            <span class="text-cyan-400">🌊</span>
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-300">ตรวจสอบรหัสแอปพรีเมียมและสถานะคำสั่งซื้อของคุณ</p>
+                    </div>
+                    <div class="text-xs bg-cyan-500/20 text-cyan-300 px-3 py-1.5 rounded-full border border-cyan-400/30">
+                        <i class="fa-solid fa-shield-halved mr-1"></i> ปลอดภัย รับประกันตลอดยุคใช้งาน
+                    </div>
+                </div>
+
+                <!-- Orders Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-cyan-500/20 text-xs text-cyan-300 font-semibold uppercase">
+                                <th class="p-3">รหัสคำสั่งซื้อ</th>
+                                <th class="p-3">สินค้า</th>
+                                <th class="p-3">แพ็กเกจ</th>
+                                <th class="p-3">ราคา</th>
+                                <th class="p-3">สถานะ</th>
+                                <th class="p-3">ข้อมูล/รหัสแอป</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userOrdersTable" class="text-sm divide-y divide-cyan-500/10">
+                            <!-- JS Generated -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: ADMIN PORTAL DASHBOARD -->
+        <section id="tab-admin" class="tab-content hidden space-y-8">
+            <!-- Admin Header -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-amber-500/30">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 text-2xl">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-heading text-2xl font-bold text-white">ระบบจัดการหลังบ้าน (Admin Dashboard)</h2>
+                            <p class="text-xs sm:text-sm text-amber-200/80">คุณล็อกอินอยู่ในยศ: ผู้ดูแลระบบ 🌊 (ปลดล็อกความสามารถเต็มรูปแบบ)</p>
+                        </div>
+                    </div>
+                    <button onclick="logoutAdmin()" class="px-4 py-2 rounded-full bg-red-500/20 hover:bg-red-500/30 text-red-300 text-xs border border-red-500/40 transition">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> ออกจากหลังบ้าน
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-cyan-400">
+                    <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold">ยอดขายรวมทั้งหมด</div>
+                    <div class="text-3xl font-extrabold text-cyan-300 mt-2 font-heading" id="adminTotalSales">฿12,450</div>
+                    <div class="text-xs text-cyan-400 mt-1">🌊 อัปเดตเรียลไทม์</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-emerald-400">
+                    <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold">จำนวนคำสั่งซื้อสำเร็จ</div>
+                    <div class="text-3xl font-extrabold text-emerald-300 mt-2 font-heading" id="adminTotalOrders">48 รายการ</div>
+                    <div class="text-xs text-emerald-400 mt-1">🌊 สลิปถูกต้องอัตโนมัติ</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-purple-400">
+                    <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold">รายการสินค้าในระบบ</div>
+                    <div class="text-3xl font-extrabold text-purple-300 mt-2 font-heading" id="adminTotalProducts">6 รายการ</div>
+                    <div class="text-xs text-purple-400 mt-1">🌊 พร้อมเปิดจำหน่าย</div>
+                </div>
+            </div>
+
+            <!-- Admin Tools Navigation Tabs -->
+            <div class="flex space-x-2 border-b border-cyan-500/20 pb-2">
+                <button onclick="switchAdminTab('products')" id="adminTab-products" class="admin-tab-btn px-4 py-2 rounded-xl text-sm font-medium bg-cyan-500/30 text-cyan-200">
+                    <i class="fa-solid fa-boxes-stacked mr-1.5"></i> จัดการสินค้า & สต็อก
+                </button>
+                <button onclick="switchAdminTab('users')" id="adminTab-users" class="admin-tab-btn px-4 py-2 rounded-xl text-sm font-medium hover:bg-cyan-500/10 text-slate-300">
+                    <i class="fa-solid fa-users-gear mr-1.5"></i> จัดการยศยูเซอร์ (Reseller)
+                </button>
+                <button onclick="switchAdminTab('payment')" id="adminTab-payment" class="admin-tab-btn px-4 py-2 rounded-xl text-sm font-medium hover:bg-cyan-500/10 text-slate-300">
+                    <i class="fa-solid fa-qrcode mr-1.5"></i> ตั้งค่าระบบชำระเงิน
+                </button>
+            </div>
+
+            <!-- Admin Sub-Tab 1: Product & Stock Management -->
+            <div id="admin-sub-products" class="admin-sub-content space-y-6">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-heading text-lg font-bold text-cyan-200">รายการสินค้าทั้งหมด</h3>
+                    <button onclick="openAddProductModal()" class="px-4 py-2 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-glow transition">
+                        <i class="fa-solid fa-plus mr-1"></i> เพิ่มสินค้าใหม่
+                    </button>
+                </div>
+
+                <div class="glass-panel rounded-2xl overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-cyan-900/40 text-cyan-300 text-xs uppercase font-semibold">
+                                <tr>
+                                    <th class="p-4">รูปภาพ</th>
+                                    <th class="p-4">ชื่อแอป</th>
+                                    <th class="p-4">หมวดหมู่</th>
+                                    <th class="p-4">ราคาปกติต่ำสุด</th>
+                                    <th class="p-4">ราคาส่งตัวแทน 🌊</th>
+                                    <th class="p-4">สต็อกในระบบ</th>
+                                    <th class="p-4 text-center">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminProductsTable" class="divide-y divide-cyan-500/10">
+                                <!-- JS Populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Sub-Tab 2: User Role Management -->
+            <div id="admin-sub-users" class="admin-sub-content hidden space-y-6">
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="font-heading text-lg font-bold text-cyan-200 mb-2">จัดการสิทธิ์และยศผู้ใช้งาน</h3>
+                    <p class="text-xs text-slate-300 mb-6">คุณสามารถปรับเปลี่ยนยศของผู้ใช้งานเพื่อมอบส่วนลดราคาส่งตัวแทนจำหน่ายได้ทันที</p>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-cyan-900/40 text-cyan-300 text-xs uppercase font-semibold">
+                                <tr>
+                                    <th class="p-3">ชื่อผู้ใช้</th>
+                                    <th class="p-3">อีเมล</th>
+                                    <th class="p-3">ยศปัจจุบัน</th>
+                                    <th class="p-3">ยอดซื้อสะสม</th>
+                                    <th class="p-3 text-center">เปลี่ยนยศ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminUsersTable" class="divide-y divide-cyan-500/10">
+                                <!-- JS Populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Sub-Tab 3: Payment Settings -->
+            <div id="admin-sub-payment" class="admin-sub-content hidden space-y-6">
+                <div class="glass-panel rounded-2xl p-6 max-w-2xl">
+                    <h3 class="font-heading text-lg font-bold text-cyan-200 mb-4">ตั้งค่า PromptPay & ตรวจสลิป</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs text-cyan-300 font-semibold mb-1">เบอร์โทรศัพท์ / เลขบัตรประชาชน PromptPay</label>
+                            <input type="text" id="adminPromptPayNo" value="089-123-4567" class="w-full glass-input rounded-xl px-4 py-2.5 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-cyan-300 font-semibold mb-1">ชื่อบัญชีผู้รับเงิน</label>
+                            <input type="text" id="adminPromptPayName" value="บจก. อควา พรีเมียม แอปส์ (Aqua Premium)" class="w-full glass-input rounded-xl px-4 py-2.5 text-sm">
+                        </div>
+                        <div class="pt-2">
+                            <button onclick="savePaymentSettings()" class="px-6 py-2.5 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-glow transition">
+                                บันทึกข้อมูลชำระเงิน 🌊
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-16 border-t border-cyan-500/20 pt-8 pb-16 text-center text-xs text-slate-400 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center space-y-3">
+            <div class="flex items-center space-x-2 text-cyan-300 font-bold text-base">
+                <span>🌊 Aqua Premium App Marketplace</span>
+            </div>
+            <p>ออกแบบด้วยสไตล์ Liquid Glassmorphic • ปลอดภัย รวดเร็ว การันตีคุณภาพ 🌊</p>
+            <p class="text-slate-500">© 2026 AquaPremium. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- MODALS SECTION -->
+
+    <!-- Modal 1: Product Buy & Package Selection -->
+    <div id="productModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+        <div class="glass-panel rounded-3xl max-w-lg w-full p-6 sm:p-8 relative border border-cyan-400/40 shadow-glow animate-fade-in max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('productModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl w-8 h-8 rounded-full bg-slate-800/50 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="modalProductContent">
+                <!-- JS populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Payment & Slip Upload -->
+    <div id="paymentModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+        <div class="glass-panel rounded-3xl max-w-md w-full p-6 sm:p-8 relative border border-cyan-400/40 shadow-glow">
+            <button onclick="closeModal('paymentModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl w-8 h-8 rounded-full bg-slate-800/50 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center mx-auto text-2xl mb-2">
+                    🌊
+                </div>
+                <h3 class="font-heading text-xl font-bold text-white">ชำระเงินผ่าน PromptPay</h3>
+                <p class="text-xs text-slate-300">สแกน QR Code แล้วอัปโหลดสลิปเพื่อยืนยัน</p>
+            </div>
+
+            <!-- QR Display -->
+            <div class="bg-white p-4 rounded-2xl max-w-[200px] mx-auto mb-4 text-center shadow-lg">
+                <img id="qrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=PromptPayAqua" alt="PromptPay QR" class="w-full h-auto rounded">
+                <div class="text-slate-900 text-xs font-bold mt-2" id="promptPayNameDisplay">Aqua Premium</div>
+            </div>
+
+            <!-- Summary details -->
+            <div class="glass-card rounded-xl p-3 text-xs mb-4 space-y-1">
+                <div class="flex justify-between text-slate-300">
+                    <span>สินค้า:</span>
+                    <span id="payProductName" class="font-semibold text-white">-</span>
+                </div>
+                <div class="flex justify-between text-slate-300">
+                    <span>แพ็กเกจ:</span>
+                    <span id="payPackageName" class="font-semibold text-cyan-300">-</span>
+                </div>
+                <div class="flex justify-between text-slate-300">
+                    <span>ยอดชำระสุทธิ:</span>
+                    <span id="payAmountDisplay" class="font-bold text-cyan-300 text-sm">฿0</span>
+                </div>
+            </div>
+
+            <!-- Slip Upload & Auto Slip Verification Simulator -->
+            <div class="space-y-3">
+                <label class="block text-xs text-cyan-200 font-semibold">อัปโหลดสลิปการโอนเงิน (จำลองตรวจสลิปฟรี 🌊):</label>
+                <div class="border-2 border-dashed border-cyan-500/40 rounded-2xl p-4 text-center cursor-pointer hover:border-cyan-400 bg-cyan-950/20 transition relative" onclick="triggerFileInput()">
+                    <input type="file" id="slipFileInput" class="hidden" accept="image/*" onchange="handleSlipUpload(event)">
+                    <div id="slipUploadPlaceholder">
+                        <i class="fa-solid fa-cloud-arrow-up text-2xl text-cyan-400 mb-1"></i>
+                        <p class="text-xs text-slate-300">คลิกเพื่อเลือกไฟล์รูปภาพสลิป</p>
+                    </div>
+                    <div id="slipPreviewContainer" class="hidden">
+                        <img id="slipPreviewImg" src="" class="max-h-32 mx-auto rounded-lg mb-2 shadow">
+                        <span class="text-xs text-cyan-300 font-semibold block">🌊 เลือกสลิปเรียบร้อยแล้ว</span>
+                    </div>
+                </div>
+
+                <button onclick="processPayment()" id="btnConfirmPay" class="w-full py-3 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-glow transition flex items-center justify-center space-x-2">
+                    <span>ยืนยันการชำระเงิน</span>
+                    <span class="text-base">🌊</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Slip Solution Guide Modal -->
+    <div id="slipGuideModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+        <div class="glass-panel rounded-3xl max-w-xl w-full p-6 sm:p-8 relative border border-cyan-400/40 shadow-glow">
+            <button onclick="closeModal('slipGuideModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl w-8 h-8 rounded-full bg-slate-800/50 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="text-3xl text-cyan-400">🌊</div>
+                <div>
+                    <h3 class="font-heading text-xl font-bold text-white">คำแนะนำระบบตรวจสลิปธนาคาร (Slip Verification)</h3>
+                    <p class="text-xs text-cyan-300">ทางเลือกคุ้มค่า สบายกระเป๋า และแบบใช้งานฟรีสำหรับเจ้าของร้าน</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm text-slate-200 max-h-[60vh] overflow-y-auto pr-2">
+                <div class="glass-card p-4 rounded-2xl border-l-4 border-l-cyan-400">
+                    <h4 class="font-bold text-cyan-300 text-sm mb-1">1. EasySlip API (คุ้มค่า ยอดนิยมอันดับ 1)</h4>
+                    <p class="text-slate-300 leading-relaxed">
+                        บริการตรวจสอบสลิปผ่าน QR Code บนสลิปธนาคาร เช็คได้แม่นยำ 100% ป้องกันสลิปซ้ำ สลิปปลอม สลิปดัดแปลงแก้ไข มีแพ็กเกจฟรีทดลองใช้งาน และคิดราคาเริ่มต้นเพียงสลิปละไม่ถึง 0.20 บาท
+                    </p>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border-l-4 border-l-emerald-400">
+                    <h4 class="font-bold text-emerald-300 text-sm mb-1">2. Open-Source OCR + PromptPay QR Pattern Check (ฟรี 100%)</h4>
+                    <p class="text-slate-300 leading-relaxed">
+                        ใช้ไลบรารีฟรีอย่าง Tesseract.js อ่านข้อความบนรูปภาพสลิปเพื่อแกะเลขธุรกรรม/ยอดเงิน และถอดรหัส QR Payload (EMVCo) บนสลิป โดยไม่มีค่าบริการ API
+                    </p>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border-l-4 border-l-purple-400">
+                    <h4 class="font-bold text-purple-300 text-sm mb-1">3. SCB / KBANK Open API (Direct Bank Connection)</h4>
+                    <p class="text-slate-300 leading-relaxed">
+                        สมัครเป็นนิติบุคคล/ร้านค้ากับธนาคารโดยตรง เพื่อรับ Notification WEBHOOK แจ้งเตือนเมื่อมียอดเงินเข้าบัญชีจริงทันทีโดยไม่ต้องอ่านสลิป
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <button onclick="closeModal('slipGuideModal')" class="px-6 py-2.5 rounded-full bg-cyan-500 text-slate-950 font-bold text-xs shadow-glow">
+                    รับทราบข้อเสนอแนะ 🌊
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Admin Passcode Login Modal -->
+    <div id="adminAuthModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden">
+        <div class="glass-panel rounded-3xl max-w-sm w-full p-6 sm:p-8 relative border border-amber-500/40 shadow-glow text-center">
+            <button onclick="closeModal('adminAuthModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl w-8 h-8 rounded-full bg-slate-800/50 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="w-16 h-16 rounded-3xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center mx-auto text-3xl mb-4 shadow-glow">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3 class="font-heading text-xl font-bold text-white mb-1">ยืนยันรหัสผ่านแอดมิน</h3>
+            <p class="text-xs text-slate-300 mb-6">กรอกรหัสผ่านเพื่อเข้าสู่ระบบบริหารหลังบ้าน <br><span class="text-amber-300/80">(ทดสอบใช้รหัส: <code class="bg-slate-800 px-1.5 py-0.5 rounded text-amber-300">admin123</code> หรือ <code class="bg-slate-800 px-1.5 py-0.5 rounded text-amber-300">1234</code>)</span></p>
+
+            <div class="space-y-4">
+                <input type="password" id="adminPassInput" placeholder="กรอกรหัสผ่าน 4-8 หลัก" class="w-full glass-input rounded-2xl px-4 py-3 text-center text-lg tracking-widest font-mono">
+                <button onclick="verifyAdminPassword()" class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-sm shadow-glow transition flex items-center justify-center space-x-2">
+                    <span>ปลดล็อกเข้าหลังบ้าน</span>
+                    <span>🌊</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 5: Add New Product (Admin) -->
+    <div id="addProductModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+        <div class="glass-panel rounded-3xl max-w-lg w-full p-6 sm:p-8 relative border border-cyan-400/40 shadow-glow max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('addProductModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl w-8 h-8 rounded-full bg-slate-800/50 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="font-heading text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <span>เพิ่มสินค้าพรีเมียมใหม่</span>
+                <span class="text-cyan-400 text-base">🌊</span>
+            </h3>
+
+            <div class="space-y-4 text-xs sm:text-sm">
+                <div>
+                    <label class="block text-cyan-300 font-semibold mb-1">ชื่อแอปพลิเคชัน</label>
+                    <input type="text" id="newProdName" placeholder="เช่น Disney+ Hotstar Premium" class="w-full glass-input rounded-xl px-4 py-2.5">
+                </div>
+                <div>
+                    <label class="block text-cyan-300 font-semibold mb-1">หมวดหมู่</label>
+                    <select id="newProdCategory" class="w-full glass-input rounded-xl px-4 py-2.5 bg-slate-900">
+                        <option value="entertainment">🎬 ความบันเทิง & หนัง</option>
+                        <option value="music">🎵 ฟังเพลง</option>
+                        <option value="work">🎨 กราฟิก & ตัดต่อ</option>
+                        <option value="tools">🤖 AI & เครื่องมือ</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-cyan-300 font-semibold mb-1">URL รูปภาพไอคอน (SVG / Image URL)</label>
+                    <input type="text" id="newProdIcon" placeholder="https://..." class="w-full glass-input rounded-xl px-4 py-2.5">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-cyan-300 font-semibold mb-1">ราคาปกติ (1 เดือน)</label>
+                        <input type="number" id="newProdPriceNormal" placeholder="129" class="w-full glass-input rounded-xl px-4 py-2.5">
+                    </div>
+                    <div>
+                        <label class="block text-cyan-300 font-semibold mb-1">ราคาส่งตัวแทน (1 เดือน) 🌊</label>
+                        <input type="number" id="newProdPriceReseller" placeholder="89" class="w-full glass-input rounded-xl px-4 py-2.5">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-cyan-300 font-semibold mb-1">รายละเอียดแอป</label>
+                    <textarea id="newProdDesc" rows="2" placeholder="จุดเด่นของแอป เช่น ดู 4K HDR พร้อมกันได้ 4 จอ..." class="w-full glass-input rounded-xl px-4 py-2.5"></textarea>
+                </div>
+                <button onclick="saveNewProduct()" class="w-full py-3 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-glow transition mt-2">
+                    บันทึกเพิ่มสินค้า 🌊
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast Box -->
+    <div id="toast" class="fixed top-20 right-6 z-50 glass-panel border border-cyan-400/50 rounded-2xl p-4 shadow-glow flex items-center space-x-3 transition-all duration-300 transform translate-x-72 opacity-0 pointer-events-none">
+        <div id="toastIcon" class="text-2xl text-cyan-300">🌊</div>
+        <div>
+            <div id="toastTitle" class="font-bold text-sm text-white">แจ้งเตือนระบบ</div>
+            <div id="toastMessage" class="text-xs text-cyan-100">ดำเนินการเรียบร้อยแล้ว</div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // --- GLOBAL APP STATE ---
+        let currentRole = 'customer'; // customer, reseller, admin
+        let isAdminLoggedIn = false;
+        let selectedCategory = 'all';
+        let currentBuyingProduct = null;
+        let selectedPackage = null;
+        let uploadedSlipFile = null;
+
+        // Sample Data for Premium Products
+        let products = [
+            {
+                id: 'prod_1',
+                name: 'Netflix Premium 4K',
+                category: 'entertainment',
+                icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/netflix/netflix-original.svg',
+                description: 'รับชมความบันเทิงระดับ 4K Ultra HD คมชัดสูงสุด ไม่สะดุด ดูได้ทุกอุปกรณ์',
+                packages: [
+                    { name: '1 เดือน (จอส่วนตัว)', priceNormal: 129, priceReseller: 89, stock: 15 },
+                    { name: '3 เดือน (จอส่วนตัว)', priceNormal: 349, priceReseller: 259, stock: 8 },
+                    { name: '1 ปี (ย้ายจออัตโนมัติ)', priceNormal: 1290, priceReseller: 990, stock: 5 }
+                ]
+            },
+            {
+                id: 'prod_2',
+                name: 'YouTube Premium',
+                category: 'music',
+                icon: 'https://www.vectorlogo.zone/logos/youtube/youtube-icon.svg',
+                description: 'ดูคลิปไม่มีโฆษณาคั่น เล่นเพลงพื้นหลังได้ ฟัง YouTube Music Premium ฟรี',
+                packages: [
+                    { name: '1 เดือน (แฟมิลี่ร่วม)', priceNormal: 45, priceReseller: 29, stock: 25 },
+                    { name: '3 เดือน (ดึงเมลตนเอง)', priceNormal: 120, priceReseller: 80, stock: 12 },
+                    { name: '1 ปี (ต่ออายุส่วนตัว)', priceNormal: 450, priceReseller: 320, stock: 10 }
+                ]
+            },
+            {
+                id: 'prod_3',
+                name: 'Spotify Premium',
+                category: 'music',
+                icon: 'https://www.vectorlogo.zone/logos/spotify/spotify-icon.svg',
+                description: 'ฟังเพลงแบบไม่มีโฆษณา ข้ามเพลงได้ไม่จำกัด โหลดฟังออฟไลน์เสียงคมชัดสูง',
+                packages: [
+                    { name: '1 เดือน (Family Invite)', priceNormal: 39, priceReseller: 25, stock: 30 },
+                    { name: '6 เดือน (Family Invite)', priceNormal: 199, priceReseller: 139, stock: 14 }
+                ]
+            },
+            {
+                id: 'prod_4',
+                name: 'Canva Pro',
+                category: 'work',
+                icon: 'https://www.vectorlogo.zone/logos/canva/canva-icon.svg',
+                description: 'ปลดล็อกเทมเพลต รูปภาพฟอนต์พรีเมียม ลบพื้นหลังด้วย AI ได้ในคลิกเดียว',
+                packages: [
+                    { name: '1 เดือน (เข้าทีม Pro)', priceNormal: 35, priceReseller: 19, stock: 40 },
+                    { name: '1 ปี (เข้าทีม Pro)', priceNormal: 299, priceReseller: 189, stock: 20 }
+                ]
+            },
+            {
+                id: 'prod_5',
+                name: 'Disney+ Hotstar',
+                category: 'entertainment',
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/3/36/Disney%2B_logo.svg',
+                description: 'รวมภาพยนตร์ Marvel, Disney, Pixar, Star Wars และซีรีส์ดังเกาหลี',
+                packages: [
+                    { name: '1 เดือน (แพ็กเกจพรีเมียม)', priceNormal: 99, priceReseller: 69, stock: 10 },
+                    { name: '1 ปี (แพ็กเกจพรีเมียม)', priceNormal: 790, priceReseller: 590, stock: 4 }
+                ]
+            },
+            {
+                id: 'prod_6',
+                name: 'ChatGPT Plus (GPT-4o)',
+                category: 'tools',
+                icon: 'https://www.vectorlogo.zone/logos/openai/openai-icon.svg',
+                description: 'ใช้งาน GPT-4o, DALL-E 3 สร้างภาพ และการวิเคราะห์ไฟล์ข้อมูลขั้นสูง',
+                packages: [
+                    { name: '1 เดือน (แอคเคาท์ร่วม)', priceNormal: 249, priceReseller: 179, stock: 6 },
+                    { name: '1 เดือน (ส่วนตัว 100%)', priceNormal: 690, priceReseller: 580, stock: 3 }
+                ]
+            }
+        ];
+
+        // Sample User Orders
+        let userOrders = [
+            {
+                orderId: 'AQ-88421',
+                productName: 'Netflix Premium 4K',
+                packageName: '1 เดือน (จอส่วนตัว)',
+                price: 129,
+                status: 'สำเร็จ 🌊',
+                keyAccount: 'User: aqua_net01@gmail.com | Pass: Aqua#9921 | Profile: 3'
+            },
+            {
+                orderId: 'AQ-88310',
+                productName: 'Canva Pro',
+                packageName: '1 ปี (เข้าทีม Pro)',
+                price: 299,
+                status: 'สำเร็จ 🌊',
+                keyAccount: 'เชิญเข้าทีมผ่านอีเมล: customer_01@gmail.com เรียบร้อย'
+            }
+        ];
+
+        // Sample Registered Users (for Admin)
+        let sampleUsers = [
+            { id: 'u1', name: 'Somchai S.', email: 'somchai@gmail.com', role: 'customer', totalSpent: 428 },
+            { id: 'u2', name: 'Ananda P. (ตัวแทน)', email: 'ananda_shop@gmail.com', role: 'reseller', totalSpent: 3540 },
+            { id: 'u3', name: 'Admin Manager', email: 'admin@aquapremium.com', role: 'admin', totalSpent: 0 }
+        ];
+
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            createBubbles();
+            renderProducts();
+            renderUserOrders();
+            renderAdminDashboard();
+        };
+
+        // --- ANIMATED BUBBLES ---
+        function createBubbles() {
+            const container = document.getElementById('bubblesContainer');
+            const bubbleCount = 18;
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                const size = Math.random() * 40 + 10;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.animationDuration = `${Math.random() * 8 + 6}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(bubble);
+            }
+        }
+
+        // --- NAVIGATION CONTROLLER ---
+        function switchTab(tabId) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Show selected tab content
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            if (activeTab) activeTab.classList.remove('hidden');
+
+            // Update Desktop Nav styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = 'nav-btn px-5 py-2 rounded-full text-sm font-medium transition-all hover:text-cyan-300 text-slate-300';
+            });
+            const navBtn = document.getElementById(`nav-${tabId}`);
+            if (navBtn) {
+                navBtn.className = 'nav-btn px-5 py-2 rounded-full text-sm font-medium transition-all text-cyan-300 bg-cyan-500/20 border border-cyan-400/30 shadow-sm';
+            }
+
+            // Update Mobile Nav
+            document.querySelectorAll('[id^="mobile-nav-"]').forEach(btn => btn.className = 'p-2 text-slate-400 rounded-full flex flex-col items-center text-xs');
+            const mobileNav = document.getElementById(`mobile-nav-${tabId}`);
+            if (mobileNav) mobileNav.className = 'p-2 text-cyan-300 rounded-full flex flex-col items-center text-xs';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- ROLE MANAGEMENT ---
+        function setRole(role) {
+            currentRole = role;
+            const badgeText = document.getElementById('roleText');
+            if (role === 'customer') {
+                badgeText.innerHTML = 'ลูกค้าทั่วไป';
+                showToast('สลับยศแล้ว 🌊', 'คุณอยู่ในสิทธิ์ ลูกค้าทั่วไป (ราคาปกติ)');
+            } else if (role === 'reseller') {
+                badgeText.innerHTML = '🌊 ตัวแทนจำหน่าย';
+                showToast('สลับยศตัวแทนสำเร็จ! 🌊', 'ได้รับราคาสลับราคาส่งส่วนลดพิเศษแล้ว');
+            } else if (role === 'admin') {
+                badgeText.innerHTML = '👑 แอดมิน';
+            }
+            renderProducts();
+        }
+
+        function checkAdminAccess() {
+            if (isAdminLoggedIn) {
+                switchTab('admin');
+            } else {
+                openAdminModal();
+            }
+        }
+
+        function openAdminModal() {
+            document.getElementById('adminAuthModal').classList.remove('hidden');
+        }
+
+        function verifyAdminPassword() {
+            const pass = document.getElementById('adminPassInput').value;
+            if (pass === 'admin123' || pass === '1234') {
+                isAdminLoggedIn = true;
+                setRole('admin');
+                closeModal('adminAuthModal');
+                switchTab('admin');
+                showToast('ยินดีต้อนรับแอดมิน! 🌊', 'ปลดล็อกเครื่องมือหลังบ้านเรียบร้อยแล้ว');
+            } else {
+                showToast('รหัสผ่านไม่ถูกต้อง!', 'โปรดลองรหัส 1234 หรือ admin123', 'fa-triangle-exclamation');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            setRole('customer');
+            switchTab('home');
+            showToast('ออกจากระบบแอดมินแล้ว', 'สลับกลับสู่โหมดผู้ซื้อทั่วไป');
+        }
+
+        // --- PRODUCT RENDER ENGINE ---
+        function filterCategory(cat) {
+            selectedCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.className = 'cat-btn px-4 py-2 rounded-full text-xs font-medium bg-slate-800/50 text-slate-300 border border-cyan-500/20 whitespace-nowrap hover:text-cyan-300';
+            });
+            const activeBtn = document.getElementById(`cat-${cat}`);
+            if (activeBtn) {
+                activeBtn.className = 'cat-btn px-4 py-2 rounded-full text-xs font-medium bg-cyan-500/30 text-cyan-200 border border-cyan-400/40 whitespace-nowrap';
+            }
+            renderProducts();
+        }
+
+        function filterCategoryAndSwitch(cat) {
+            switchTab('catalog');
+            filterCategory(cat);
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const featuredGrid = document.getElementById('featuredProductsGrid');
+            const searchKeyword = document.getElementById('searchInput') ? document.getElementById('searchInput').value.toLowerCase() : '';
+
+            let filtered = products.filter(p => {
+                const matchCat = selectedCategory === 'all' || p.category === selectedCategory;
+                const matchSearch = p.name.toLowerCase().includes(searchKeyword) || p.description.toLowerCase().includes(searchKeyword);
+                return matchCat && matchSearch;
+            });
+
+            // Render Catalog Grid
+            if (grid) {
+                grid.innerHTML = '';
+                if (filtered.length === 0) {
+                    grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400">ไม่พบสินค้าที่คุณค้นหา 🌊</div>`;
+                } else {
+                    filtered.forEach(prod => {
+                        grid.appendChild(createProductCardHTML(prod));
+                    });
+                }
+            }
+
+            // Render Featured Showcase on Home
+            if (featuredGrid) {
+                featuredGrid.innerHTML = '';
+                products.slice(0, 3).forEach(prod => {
+                    featuredGrid.appendChild(createProductCardHTML(prod));
+                });
+            }
+        }
+
+        function createProductCardHTML(prod) {
+            const card = document.createElement('div');
+            card.className = 'glass-card rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group';
+            
+            // Calculate starting price based on Role
+            const minPackage = prod.packages[0];
+            const priceDisplay = currentRole === 'reseller' ? minPackage.priceReseller : minPackage.priceNormal;
+
+            card.innerHTML = `
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-950/40 p-2 border border-cyan-500/30 flex items-center justify-center shadow-md">
+                            <img src="${prod.icon}" alt="${prod.name}" class="w-10 h-10 object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/888/888857.png'">
+                        </div>
+                        ${currentRole === 'reseller' ? `
+                            <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">
+                                🌊 ราคาส่งตัวแทน
+                            </span>
+                        ` : ''}
+                    </div>
+
+                    <h3 class="font-heading font-bold text-lg text-white mb-2 group-hover:text-cyan-300 transition">${prod.name}</h3>
+                    <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed mb-6">${prod.description}</p>
+                </div>
+
+                <div class="pt-4 border-t border-cyan-500/20 flex items-center justify-between mt-auto">
+                    <div>
+                        <span class="text-[10px] text-slate-400 block">เริ่มต้นเพียง</span>
+                        <div class="flex items-baseline space-x-1">
+                            <span class="text-xl font-extrabold text-cyan-300 font-heading">฿${priceDisplay}</span>
+                            <span class="text-xs text-slate-400">/เดือน</span>
+                        </div>
+                    </div>
+                    <button onclick="openProductModal('${prod.id}')" class="px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-xs shadow-glow transition transform active:scale-95 flex items-center space-x-1">
+                        <span>สั่งซื้อ</span>
+                        <span>🌊</span>
+                    </button>
+                </div>
+            `;
+            return card;
+        }
+
+        // --- PRODUCT DETAIL MODAL & PACKAGE SELECT ---
+        function openProductModal(prodId) {
+            currentBuyingProduct = products.find(p => p.id === prodId);
+            if (!currentBuyingProduct) return;
+
+            selectedPackage = currentBuyingProduct.packages[0];
+
+            const content = document.getElementById('modalProductContent');
+            content.innerHTML = `
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-950/50 p-3 border border-cyan-500/30 flex items-center justify-center shadow-lg">
+                        <img src="${currentBuyingProduct.icon}" alt="${currentBuyingProduct.name}" class="w-12 h-12 object-contain">
+                    </div>
+                    <div>
+                        <h3 class="font-heading text-2xl font-bold text-white">${currentBuyingProduct.name}</h3>
+                        <p class="text-xs text-cyan-300">🌊 รับประกันตลอดอายุการใช้งาน</p>
+                    </div>
+                </div>
+
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6 glass-card p-3 rounded-2xl">
+                    ${currentBuyingProduct.description}
+                </p>
+
+                <!-- Package Choice List -->
+                <div class="space-y-3 mb-6">
+                    <label class="block text-xs font-semibold text-cyan-200">เลือกระยะเวลาแพ็กเกจ:</label>
+                    <div class="space-y-2" id="packageOptionsContainer">
+                        ${currentBuyingProduct.packages.map((pkg, idx) => {
+                            const price = currentRole === 'reseller' ? pkg.priceReseller : pkg.priceNormal;
+                            return `
+                                <div onclick="selectPackageOption(${idx})" id="pkg-opt-${idx}" class="pkg-card glass-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between border ${idx === 0 ? 'border-cyan-400 bg-cyan-500/20' : 'border-cyan-500/20'}">
+                                    <div>
+                                        <div class="font-semibold text-sm text-white">${pkg.name}</div>
+                                        <div class="text-[11px] text-slate-400">คงเหลือในสต็อก: ${pkg.stock} แอคเคาท์</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-base font-bold text-cyan-300 font-heading">฿${price}</div>
+                                        ${currentRole === 'reseller' ? `<span class="text-[10px] text-cyan-400">🌊 ประหยัดไป ฿${pkg.priceNormal - pkg.priceReseller}</span>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+
+                <button onclick="proceedToPayment()" class="w-full py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-glow transition flex items-center justify-center space-x-2">
+                    <span>ดำเนินการชำระเงิน</span>
+                    <span class="text-base">🌊</span>
+                </button>
+            `;
+
+            document.getElementById('productModal').classList.remove('hidden');
+        }
+
+        function selectPackageOption(index) {
+            selectedPackage = currentBuyingProduct.packages[index];
+            document.querySelectorAll('.pkg-card').forEach((el, i) => {
+                if (i === index) {
+                    el.className = 'pkg-card glass-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between border border-cyan-400 bg-cyan-500/20';
+                } else {
+                    el.className = 'pkg-card glass-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between border border-cyan-500/20';
+                }
+            });
+        }
+
+        function proceedToPayment() {
+            if (!selectedPackage) return;
+            closeModal('productModal');
+
+            const price = currentRole === 'reseller' ? selectedPackage.priceReseller : selectedPackage.priceNormal;
+            document.getElementById('payProductName').innerText = currentBuyingProduct.name;
+            document.getElementById('payPackageName').innerText = selectedPackage.name;
+            document.getElementById('payAmountDisplay').innerText = `฿${price}`;
+
+            // Reset Slip Input
+            uploadedSlipFile = null;
+            document.getElementById('slipUploadPlaceholder').classList.remove('hidden');
+            document.getElementById('slipPreviewContainer').classList.add('hidden');
+
+            document.getElementById('paymentModal').classList.remove('hidden');
+        }
+
+        // --- PAYMENT & SLIP VERIFICATION SIMULATOR ---
+        function triggerFileInput() {
+            document.getElementById('slipFileInput').click();
+        }
+
+        function handleSlipUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                uploadedSlipFile = file;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('slipPreviewImg').src = e.target.result;
+                    document.getElementById('slipUploadPlaceholder').classList.add('hidden');
+                    document.getElementById('slipPreviewContainer').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function processPayment() {
+            if (!uploadedSlipFile) {
+                showToast('โปรดอัปโหลดสลิป', 'แนบรูปภาพสลิปเพื่อยืนยันการชำระเงิน', 'fa-triangle-exclamation');
+                return;
+            }
+
+            const btn = document.getElementById('btnConfirmPay');
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>กำลังตรวจสอบสลิปด้วย AI Auto OCR... 🌊</span>`;
+            btn.disabled = true;
+
+            // Simulate Slip Checking Process
+            setTimeout(() => {
+                btn.innerHTML = `<span>ยืนยันการชำระเงิน</span><span>🌊</span>`;
+                btn.disabled = false;
+                closeModal('paymentModal');
+
+                // Decrease Stock
+                if (selectedPackage.stock > 0) selectedPackage.stock--;
+
+                // Add to User Orders History
+                const newOrder = {
+                    orderId: 'AQ-' + Math.floor(10000 + Math.random() * 90000),
+                    productName: currentBuyingProduct.name,
+                    packageName: selectedPackage.name,
+                    price: currentRole === 'reseller' ? selectedPackage.priceReseller : selectedPackage.priceNormal,
+                    status: 'สำเร็จ 🌊',
+                    keyAccount: `User: aqua_user${Math.floor(Math.random()*100)}@gmail.com | Pass: PremiumAqua#${Math.floor(Math.random()*999)}`
+                };
+                userOrders.unshift(newOrder);
+
+                renderUserOrders();
+                renderAdminDashboard();
+                switchTab('orders');
+
+                showToast('ชำระเงินสำเร็จแล้ว! 🌊', 'ระบบตรวจสอบสลิปถูกต้องแล้ว รับรหัสผ่านได้ทันที');
+            }, 2000);
+        }
+
+        // --- RENDER USER ORDERS TABLE ---
+        function renderUserOrders() {
+            const tbody = document.getElementById('userOrdersTable');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            userOrders.forEach(ord => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-cyan-900/20 transition';
+                tr.innerHTML = `
+                    <td class="p-3 font-mono text-cyan-300 font-semibold">${ord.orderId}</td>
+                    <td class="p-3 font-bold text-white">${ord.productName}</td>
+                    <td class="p-3 text-slate-300">${ord.packageName}</td>
+                    <td class="p-3 font-bold text-cyan-300">฿${ord.price}</td>
+                    <td class="p-3">
+                        <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                            <span>${ord.status}</span>
+                        </span>
+                    </td>
+                    <td class="p-3 font-mono text-xs text-amber-200 bg-slate-900/40 rounded p-2 border border-cyan-500/20">
+                        ${ord.keyAccount}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // --- ADMIN PORTAL LOGIC ---
+        function switchAdminTab(subTab) {
+            document.querySelectorAll('.admin-sub-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.className = 'admin-tab-btn px-4 py-2 rounded-xl text-sm font-medium hover:bg-cyan-500/10 text-slate-300');
+
+            document.getElementById(`admin-sub-${subTab}`).classList.remove('hidden');
+            document.getElementById(`adminTab-${subTab}`).className = 'admin-tab-btn px-4 py-2 rounded-xl text-sm font-medium bg-cyan-500/30 text-cyan-200';
+        }
+
+        function renderAdminDashboard() {
+            renderAdminProductsTable();
+            renderAdminUsersTable();
+        }
+
+        function renderAdminProductsTable() {
+            const tbody = document.getElementById('adminProductsTable');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            products.forEach(p => {
+                const minPkg = p.packages[0];
+                const totalStock = p.packages.reduce((acc, curr) => acc + curr.stock, 0);
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-cyan-900/20 transition';
+                tr.innerHTML = `
+                    <td class="p-4">
+                        <img src="${p.icon}" class="w-8 h-8 object-contain">
+                    </td>
+                    <td class="p-4 font-bold text-white">${p.name}</td>
+                    <td class="p-4 text-xs text-slate-300 uppercase">${p.category}</td>
+                    <td class="p-4 font-bold text-slate-200">฿${minPkg.priceNormal}</td>
+                    <td class="p-4 font-bold text-cyan-300">฿${minPkg.priceReseller} 🌊</td>
+                    <td class="p-4">
+                        <span class="px-2.5 py-1 rounded-full text-xs ${totalStock > 5 ? 'bg-cyan-500/20 text-cyan-300' : 'bg-red-500/20 text-red-300'}">
+                            ${totalStock} ชิ้น
+                        </span>
+                    </td>
+                    <td class="p-4 text-center space-x-2">
+                        <button onclick="deleteProduct('${p.id}')" class="p-2 rounded-lg bg-red-500/20 hover:bg-red-500/40 text-red-300 text-xs">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderAdminUsersTable() {
+            const tbody = document.getElementById('adminUsersTable');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            sampleUsers.forEach(u => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-cyan-900/20 transition';
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-white">${u.name}</td>
+                    <td class="p-3 text-slate-300 text-xs">${u.email}</td>
+                    <td class="p-3">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${u.role === 'reseller' ? 'bg-cyan-500/30 text-cyan-200 border border-cyan-400/30' : 'bg-slate-700 text-slate-300'}">
+                            ${u.role === 'reseller' ? '🌊 ตัวแทนจำหน่าย' : 'ผู้ซื้อทั่วไป'}
+                        </span>
+                    </td>
+                    <td class="p-3 font-bold text-cyan-300">฿${u.totalSpent}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="toggleUserRole('${u.id}')" class="px-3 py-1 rounded-full bg-cyan-500/20 hover:bg-cyan-500/40 text-cyan-300 text-xs border border-cyan-400/30">
+                            สลับยศ 🌊
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleUserRole(userId) {
+            const user = sampleUsers.find(u => u.id === userId);
+            if (user) {
+                user.role = user.role === 'reseller' ? 'customer' : 'reseller';
+                renderAdminUsersTable();
+                showToast('ปรับยศเรียบร้อย 🌊', `เปลี่ยนยศให้ ${user.name} สำเร็จ`);
+            }
+        }
+
+        function openAddProductModal() {
+            document.getElementById('addProductModal').classList.remove('hidden');
+        }
+
+        function saveNewProduct() {
+            const name = document.getElementById('newProdName').value;
+            const category = document.getElementById('newProdCategory').value;
+            const icon = document.getElementById('newProdIcon').value || 'https://cdn-icons-png.flaticon.com/512/888/888857.png';
+            const priceNormal = parseFloat(document.getElementById('newProdPriceNormal').value) || 99;
+            const priceReseller = parseFloat(document.getElementById('newProdPriceReseller').value) || 69;
+            const desc = document.getElementById('newProdDesc').value || 'แอปพรีเมียมคุณภาพสูง รับประกันตลอดยุคใช้งาน';
+
+            if (!name) {
+                showToast('กรอกชื่อแอป!', 'โปรดระบุชื่อสินค้า', 'fa-triangle-exclamation');
+                return;
+            }
+
+            const newProd = {
+                id: 'prod_' + (products.length + 1),
+                name: name,
+                category: category,
+                icon: icon,
+                description: desc,
+                packages: [
+                    { name: '1 เดือน (แพ็กเกจพรีเมียม)', priceNormal: priceNormal, priceReseller: priceReseller, stock: 10 }
+                ]
+            };
+
+            products.push(newProd);
+            closeModal('addProductModal');
+            renderProducts();
+            renderAdminProductsTable();
+
+            showToast('เพิ่มสินค้าใหม่แล้ว! 🌊', `เพิ่ม ${name} เข้าสู่ระบบเรียบร้อย`);
+        }
+
+        function deleteProduct(prodId) {
+            products = products.filter(p => p.id !== prodId);
+            renderProducts();
+            renderAdminProductsTable();
+            showToast('ลบสินค้าสำเร็จ 🌊', 'ลบสินค้าออกจากระบบแล้ว');
+        }
+
+        function savePaymentSettings() {
+            const no = document.getElementById('adminPromptPayNo').value;
+            const name = document.getElementById('adminPromptPayName').value;
+            document.getElementById('promptPayNameDisplay').innerText = name;
+            showToast('บันทึกเรียบร้อย 🌊', 'อัปเดตข้อมูลการรับเงิน PromptPay แล้ว');
+        }
+
+        function openSlipGuideModal() {
+            document.getElementById('slipGuideModal').classList.remove('hidden');
+        }
+
+        // --- UTILS ---
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function showToast(title, message, iconClass = 'fa-water') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMessage').innerText = message;
+            
+            toast.classList.remove('translate-x-72', 'opacity-0', 'pointer-events-none');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-72', 'opacity-0', 'pointer-events-none');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
